@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fullstack_group_ui_kit/fullstack_group_ui_kit.dart';
+import 'package:package_demo/navigation_cubit.dart';
 
 import 'api_service.dart';
 
@@ -12,26 +14,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+    return BlocProvider(
+      create: (context) => NavigationCubit(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: HubPage(),
+      ),
     );
   }
 }
-
-//TODO: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//TODO: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//TODO: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//TODO: ВАЖНО: ЭЛЕМЕНТЫ НА ПЕРВЫХ 3 СТРАНИЦАХ
-//TODO: БОТТОМ БАР В ЭТОМ ДЕМО РЕАЛИЗОВАН НЕ ПОЛНОСТЬЮ
-//TODO: ПОЭТОМУ РАБОТАЕТ НЕМНОГО КРИВО
-//TODO: НА ВТОРОЙ СТРАНИЦЕ ВИДЖЕТ СТАТУСА ДОСТАВКИ
-//TODO: И ТРИ КНОПКИ. ВИДЖЕТ АВТОМАТИЧЕСКИ НЕ ОБНОВЛЯЕТСЯ
-//TODO: ПОСЛЕ НАЖАТИЯ НА КНОПКУ ДЛЯ ОБНОВЛЕНИЯ СТАТУСА
-//TODO: НУЖНО ОБНОВИТЬ СТРАНИЦУ (ПЕРЕЙТИ НА ДРУГУЮ И ВЕРНУТЬСЯ)
-//TODO: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//TODO: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//TODO: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 List<Product> products = [
   Product(
@@ -150,48 +141,8 @@ class MyHomePage extends StatelessWidget {
               },
               child: Text('Уведомление предупреждение'),
             )
-
-
-
-
           ],
         ),
-      ),
-      bottomNavigationBar: CustomBottomBar(
-        icons: const [
-          Icons.home,
-          Icons.search,
-          Icons.favorite,
-          Icons.person,
-        ],
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MyHomePage()),
-              );
-              break;
-            case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SearchPage()),
-              );
-              break;
-            case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LikePage()),
-              );
-              break;
-            case 3:
-              print("tapped");
-              break;
-          }
-        },
-        selectedColor: Color(0xFF4B48AC),
-        unselectedColor: Color(0xFFC8CDFF),
-        splashColor: Color(0xFF6E66FE),
       ),
     );
   }
@@ -241,39 +192,6 @@ class SearchPage extends StatelessWidget {
           ],
         )
       ),
-      bottomNavigationBar: CustomBottomBar(
-        icons: const [
-          Icons.home,
-          Icons.search,
-          Icons.favorite,
-          Icons.person,
-        ],
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MyHomePage()),
-              );
-              break;
-            case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SearchPage()),
-              );
-              break;
-            case 2:
-              print("tapped");
-              break;
-            case 3:
-              print("tapped");
-              break;
-          }
-        },
-        selectedColor: Color(0xFF4B48AC),
-        unselectedColor: Color(0xFFC8CDFF),
-        splashColor: Color(0xFF6E66FE),
-      ),
     );
   }
 }
@@ -299,42 +217,51 @@ class LikePage extends StatelessWidget {
               )
           )
       ),
-      bottomNavigationBar: CustomBottomBar(
-        icons: const [
-          Icons.home,
-          Icons.search,
-          Icons.favorite,
-          Icons.person,
-        ],
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MyHomePage()),
-              );
-              break;
-            case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SearchPage()),
-              );
-              break;
-            case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LikePage()),
-              );
-              break;
-            case 3:
-              print("tapped");
-              break;
-          }
-        },
-        selectedColor: Color(0xFF4B48AC),
-        unselectedColor: Color(0xFFC8CDFF),
-        splashColor: Color(0xFF6E66FE),
-      ),
+    );
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold();
+  }
+}
+
+class HubPage extends StatelessWidget {
+  HubPage({super.key});
+
+  final List<Widget> _pages = [
+    MyHomePage(),
+    SearchPage(),
+    LikePage(),
+    ProfilePage(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<NavigationCubit, int> (
+      builder: (context, currentIndex) {
+        return Scaffold(
+          body: _pages[currentIndex],
+          bottomNavigationBar: CustomBottomBar(
+            icons: const [
+              Icons.home,
+              Icons.search,
+              Icons.favorite,
+              Icons.person,
+            ],
+            selectedColor: Color(0xFF4B48AC),
+            unselectedColor: Color(0xFFC8CDFF),
+            splashColor: Color(0xFF6E66FE),
+            onTap: (index) {
+              context.read<NavigationCubit>().setPage(index);
+            },
+          ),
+        );
+      },
     );
   }
 }
