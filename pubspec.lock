@@ -102,10 +102,11 @@ packages:
   fullstack_group_ui_kit:
     dependency: "direct main"
     description:
-      name: fullstack_group_ui_kit
-      sha256: "0fbc18eda2cf9c137c9a8d8d95d26774661ebe3adf90dc0a8ea158b082e61ff9"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: master
+      resolved-ref: "41dd6606af7ab841a28261b25144489b9f1a9352"
+      url: "git@github.com:RogaJedi/fullstack_group_ui_kit.git"
+    source: git
     version: "0.0.1"
   leak_tracker:
     dependency: transitive
