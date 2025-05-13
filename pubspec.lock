@@ -82,10 +82,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_bloc
-      sha256: "1046d719fbdf230330d3443187cc33cc11963d15c9089f6cc56faa42a4c5f0cc"
+      sha256: cf51747952201a455a1c840f8171d273be009b932c75093020f9af64f2123e38
       url: "https://pub.dev"
     source: hosted
-    version: "9.1.0"
+    version: "9.1.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -104,7 +104,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "41dd6606af7ab841a28261b25144489b9f1a9352"
+      resolved-ref: "5d3449a4fc9e828d042343f79028bbb4a805f138"
       url: "git@github.com:RogaJedi/fullstack_group_ui_kit.git"
     source: git
     version: "0.0.1"
@@ -184,10 +184,10 @@ packages:
     dependency: transitive
     description:
       name: provider
-      sha256: "489024f942069c2920c844ee18bb3d467c69e48955a4f32d1677f71be103e310"
+      sha256: "4abbd070a04e9ddc287673bf5a030c7ca8b685ff70218720abab8b092f53dd84"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.4"
+    version: "6.1.5"
   sky_engine:
     dependency: transitive
     description: flutter

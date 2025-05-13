@@ -91,8 +91,7 @@ class MyHomePage extends StatelessWidget {
 
             ElevatedButton(
               onPressed: () {
-                CustomNotification.show(
-                    context,
+                CustomNotificationProvider.showNotification(
                     message: "Info",
                     type: NotificationType.info,
                     closeTime: 5,
@@ -104,8 +103,7 @@ class MyHomePage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                CustomNotification.show(
-                    context,
+                CustomNotificationProvider.showNotification(
                     message: "Success",
                     type: NotificationType.success,
                     closeTime: 5,
@@ -117,8 +115,7 @@ class MyHomePage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                CustomNotification.show(
-                    context,
+                CustomNotificationProvider.showNotification(
                     message: "Error",
                     type: NotificationType.error,
                     closeTime: 5,
@@ -130,8 +127,7 @@ class MyHomePage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                CustomNotification.show(
-                    context,
+                CustomNotificationProvider.showNotification(
                     message: "Warning",
                     type: NotificationType.warning,
                     closeTime: 5,
@@ -245,7 +241,12 @@ class HubPage extends StatelessWidget {
     return BlocBuilder<NavigationCubit, int> (
       builder: (context, currentIndex) {
         return Scaffold(
-          body: _pages[currentIndex],
+          body: Stack(
+            children: [
+              _pages[currentIndex],
+              CustomNotification()
+            ],
+          ),
           bottomNavigationBar: CustomBottomBar(
             icons: const [
               Icons.home,
